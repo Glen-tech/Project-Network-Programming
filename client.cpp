@@ -14,7 +14,8 @@ int main ()
 	const void * a = nullptr;
 
     cout << "Welkom bij project netwerken" <<endl;
-    socket.connect ("tcp://localhost:5555");
+	socket.connect ("tcp://benternet.pxl-ea-ict.be:24041");
+    //socket.connect ("tcp://localhost:5555");
 	//socket.connect ("tcp://192.168.0.54:80");
 	
 	cout << "Geef aan in voor werkende ventilator" << endl;
@@ -31,7 +32,7 @@ int main ()
 		
 		string rp1 = std::string(static_cast<char*>(request.data()), request.size());
 		cout << "Sending "<< rp1 <<endl;
-        socket.send (request);
+        socket.send(request);
 
         //  Get the reply.
         zmq::message_t reply;
