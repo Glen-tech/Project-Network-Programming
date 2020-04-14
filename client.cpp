@@ -7,8 +7,14 @@ using namespace std;
 int main ()
 {
     //  Prepare our context and socket
-    zmq::context_t context (1);
-    zmq::socket_t socket (context, ZMQ_REQ);
+    zmq::context_t context(1);
+    zmq::socket_t push (context,ZMQ_PUSH);
+	push.connect("tcp://benternet.pxl-ea-ict.be:24041");
+	//push.connect ("tcp://localhost:5555");
+	
+    zmq::socket_t pull (context, ZMQ_PULL);
+	pull.connect ("tcp://benternet.pxl-ea-ict.be:24042");
+	//pull.connect ("tcp://localhost:5556");
 	
 	string geefin ;
 	const void * a = nullptr;
@@ -24,22 +30,23 @@ int main ()
     //  Do 10 requests, waiting each time for a response
      while (true) {
 		 
+		 
 		cin >> geefin;
 		a = geefin.c_str();
         zmq::message_t request (3);
-        memcpy (request.data (), a , 3);
+        memcpy (request.data (), a, 3);
 		
 		
 		string rp1 = std::string(static_cast<char*>(request.data()), request.size());
 		cout << "Sending "<< rp1 <<endl;
-        socket.send(request);
+        push.send(request);
 
-        //  Get the reply.
-        zmq::message_t reply;
-        socket.recv (&reply);
+         // Get the reply.
+          zmq::message_t reply;
+          pull.recv(&reply);
 		
-	    string rp2 = std::string(static_cast<char*>(reply.data()), reply.size());
-		cout << "Recieved "<< rp2 << endl;
+	      string rp2 = std::string(static_cast<char*>(reply.data()), reply.size());
+		  cout << "Recieved "<< rp2 << endl;
         
     }
     return 0;

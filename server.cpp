@@ -14,56 +14,47 @@ using namespace std;
 int main () {
     //  Prepare our context and socket
     zmq::context_t context (1);
-    zmq::socket_t socket (context, ZMQ_REP);
-	socket.bind("tcp://*:24042");
-    //socket.bind ("tcp://*:5555");
-	//socket.bind ("tcp://:5555");
+	zmq::socket_t pull (context, ZMQ_PULL);
+	zmq::socket_t push (context, ZMQ_PUSH);
+	pull.bind("tcp://*:24041");
+	push.bind("tcp://*:24042");
+	//pull.bind("tcp://*:5555");
+	//push.bind("tcp://*:5556");
 	
     while (true) 
 	{
         zmq::message_t request;
+		zmq::message_t reply (17);
 
         //  Wait for next request from client
-        socket.recv(&request);
+        pull.recv(&request);
 		string rp2 = std::string(static_cast<char*>(request.data()), request.size());
 		cout << " Server Recieved "<< rp2 << endl;
-
-        //  Do some 'work'
         sleep(1);
 
-        //  Send reply back to client
-		
 		
 		if (rp2 == "aan")
 		{
-        zmq::message_t reply (17);
         memcpy (reply.data (), "Ventilator is aan", 17);
-        socket.send(reply);
+        push.send(reply);
 		}
 		
 			else if (rp2 == "uit")
 			{
-			zmq::message_t reply (17);
 			memcpy (reply.data (), "Ventilator is uit", 17);
-			socket.send (reply);
-			}
-			
-			else if (rp2 == "uit")
-			{
-			memcpy (reply.data (), "Ventilator is uit", 17);
-			socket.send (reply);
+			push.send (reply);
 			}
 			
 			else if(rp2 == "")
 			{
 			memcpy (reply.data (), "Leeg bericht \n\r", 17);
-			socket.send (reply);
+			push.send (reply);
 			}
 			
 				else
 				{
-				memcpy (reply.data (), "Probeer opnieuw \n\r", 17);
-				socket.send (reply);
+     			memcpy (reply.data (), "Probeer opnieuw \n\r", 17);
+				push.send (reply);
 				}
 	}
 		
