@@ -2,6 +2,13 @@
 #include <string>
 #include <iostream>
 
+#ifndef _WIN32
+#include <unistd.h>
+#else
+#include <windows.h>
+
+#define sleep(n)    Sleep(n)
+#endif
 using namespace std;
 
 int main ()
@@ -10,44 +17,22 @@ int main ()
     zmq::context_t context(1);
     zmq::socket_t push (context,ZMQ_PUSH);
 	push.connect("tcp://benternet.pxl-ea-ict.be:24041");
-	//push.connect ("tcp://localhost:5555");
-	
-    zmq::socket_t pull (context, ZMQ_PULL);
-	pull.connect ("tcp://benternet.pxl-ea-ict.be:24042");
-	//pull.connect ("tcp://localhost:5556");
-	
-	string geefin ;
-	const void * a = nullptr;
 
     cout << "Welkom bij project netwerken" <<endl;
-	socket.connect ("tcp://benternet.pxl-ea-ict.be:24041");
-    //socket.connect ("tcp://localhost:5555");
-	//socket.connect ("tcp://192.168.0.54:80");
-	
-	cout << "Geef aan in voor werkende ventilator" << endl;
-	cout << "Geef uit in voor de ventilator stil te zetten" << endl;
-	
-    //  Do 10 requests, waiting each time for a response
-     while (true) {
-		 
-		 
-		cin >> geefin;
-		a = geefin.c_str();
-        zmq::message_t request (3);
-        memcpy (request.data (), a, 3);
-		
-		
-		string rp1 = std::string(static_cast<char*>(request.data()), request.size());
-		cout << "Sending "<< rp1 <<endl;
-        push.send(request);
+	char geefin[50];
+	cout << "Druk 1 voor temperatuur , 2 voor licht"<<endl;
+     while (true) 
+	 {
+	    cin.getline(geefin,sizeof(geefin));
+        zmq::message_t request (strlen(geefin));
+        memcpy (request.data(), &geefin,strlen(geefin));
 
-         // Get the reply.
-          zmq::message_t reply;
-          pull.recv(&reply);
+        push.send(request);
+		string rp2 = std::string(static_cast<char*>(request.data()), request.size());
+        sleep(1);
 		
-	      string rp2 = std::string(static_cast<char*>(reply.data()), reply.size());
-		  cout << "Recieved "<< rp2 << endl;
+		memcpy (geefin,"",50); 
         
-    }
+     }
     return 0;
 }
