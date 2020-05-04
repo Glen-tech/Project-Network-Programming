@@ -1,20 +1,27 @@
 #include <ESP8266WiFi.h>
 #include <Wire.h>
 #include "Adafruit_MCP9808.h"
+
+#define LICHT A0//Grove - Light Sensor is connected to A0 of Arduino
  
 // Create the MCP9808 temperature sensor object
 Adafruit_MCP9808 tempsensor = Adafruit_MCP9808();
 
-char ssid[]    = "TP-Link_26EA";
-char password[] = "29304479";
+//char ssid[]    = "TP-Link_26EA";
+//char password[] = "29304479";
+char ssid[] = "telenet-apn-a26e6";
+char password[] = "2yao18psxaqd";   
 
 long duration;
 int distance;
 int ventilator = 4;
 
-
 IPAddress host(193,190,154,184); 
+
 String Data;
+String DataLight;
+String completeData;
+
 void temperatuur();
 
 void setup() {
@@ -46,10 +53,11 @@ void loop()
 {
   WiFiClient client;  
   float c = tempsensor.readTempC();
+  int l = analogRead(LICHT);
   Serial.print("Temp: ");
   Serial.print(c);
   Serial.print(" C\t"); 
-
+  Serial.println(DataLight);
    if (!client.connect( host , 24041))
     {      
         Serial.println("Connection to host failed");
@@ -57,28 +65,26 @@ void loop()
         return;                        
     }
 
-   if(c > 22)
+   if(c > 0 && l > 0)
    {
-   Data = "Lage temperatuur , rond de 20 graden";  
-   }
-       
-   if(c > 24)
-   {
-   Data = "Hoge temperatuur , rond de 22 graden";  
+   Data = "Temperatuur>"+String(c);  
+   DataLight = "Licht>"+String(l);
    }
           
    if(c > 26)
    {
-   Data = "Ventilator staat aan , boven 26 graden";                           
+   Data = "Temperatuur>Ventilator_staat_aan>"+String(c);                          
    }
 
-  Serial.println("Temperatuur is ");
+  completeData = Data +" "+DataLight;
+  Serial.println(completeData);
+  Serial.println("Temperatuur is");
   Serial.print(c);
   client.write((uint8_t)1);
   client.write((uint8_t)0);
-  client.write((uint8_t)(Data.length() + 1));
+  client.write((uint8_t)(completeData.length() + 1));
   client.write((uint8_t)0);
-  client.print(Data);
+  client.print(completeData);
   client.flush();
   client.stop();
   delay(1000);      
