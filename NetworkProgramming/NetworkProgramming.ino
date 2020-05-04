@@ -1,9 +1,8 @@
 #include <ESP8266WiFi.h>
 #include <Wire.h>
 #include "Adafruit_MCP9808.h"
-
 #define LICHT A0//Grove - Light Sensor is connected to A0 of Arduino
- 
+
 // Create the MCP9808 temperature sensor object
 Adafruit_MCP9808 tempsensor = Adafruit_MCP9808();
 
@@ -22,12 +21,11 @@ String Data;
 String DataLight;
 String completeData;
 
-void temperatuur();
 
 void setup() {
 
   pinMode(ventilator, OUTPUT);    
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   WiFi.begin(ssid, password);
   Serial.println("Verbinding aan het maken");
@@ -56,6 +54,7 @@ void loop()
   int l = analogRead(LICHT);
   Serial.print("Temp: ");
   Serial.print(c);
+
   Serial.print(" C\t"); 
   Serial.println(DataLight);
    if (!client.connect( host , 24041))
@@ -67,13 +66,13 @@ void loop()
 
    if(c > 0 && l > 0)
    {
-   Data = "Temperatuur>"+String(c);  
-   DataLight = "Licht>"+String(l);
+   Data = "Temperatuur>Bureau>"+String(c);  
+   DataLight = "Licht>Bureau>"+String(l);
    }
           
    if(c > 26)
    {
-   Data = "Temperatuur>Ventilator_staat_aan>"+String(c);                          
+   Data = "Temperatuur>Ventilator_staat aan>"+String(c);                          
    }
 
   completeData = Data +" "+DataLight;
