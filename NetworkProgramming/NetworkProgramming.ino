@@ -72,7 +72,7 @@ void loop()
           
    if(c > 26)
    {
-   Data = "Temperatuur>Ventilator_staat aan>"+String(c);                          
+   Data = "Temperatuur>Bureau>Ventilator_staat_aan>"+String(c);                          
    }
 
   completeData = Data +" "+DataLight;

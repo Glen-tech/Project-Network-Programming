@@ -46,7 +46,7 @@ int main () {
 	      string rp = std::string(static_cast<char*>(reply.data()), reply.size());
 		  
 		  vector<string> result; 
-		  char Store[50];
+		  char Store[70];
 		
 		   istringstream iss(rp);     //object 'iss' created
 		   for(int i = 0 ; i < 2 ; i++)
@@ -91,9 +91,9 @@ int main () {
 					   break;
 					   
 		      case 3:  if(rp == "3"){cout <<"Commando>3>Commando temperatuur living ontvangen>"<< endl;
-									 cout << "Temperatuur>Living>In Productie>" << ">" << endl;	}
+									 cout << "Temperatuur>Living>In Productie>" << endl;	}
 			           else{
-						if(command == 3){cout << "Temperatuur>Living>In Productie>" << ">" << endl;}	
+						if(command == 3){cout << "Temperatuur>Living>In Productie>" << endl;}	
 						 }
 					   break;
 		      default:	cout << "Fail>Geef een commando in>"<< endl;break;		  
