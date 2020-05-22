@@ -20,8 +20,8 @@ int main ()
 
     cout << "Welkom bij project netwerken" <<endl;
 	char geefin[50];
-	cout << "Geef 1 voor temperatuur van de bureau op de 2de verdieping.\n\rGeef 2 in voor het licht in de bureau van de 2de verdieping."<<endl;
-	cout << "Geef 3 voor temperatuur van de living op de gelijksvloers."<<endl;
+	cout << "Geef Data>ESPbureau>temp> voor temperatuur van de bureau op de 2de verdieping.\n\rGeef Data>ESPbureau>Licht in voor het licht in de bureau van de 2de verdieping."<<endl;
+	cout << "Geef Data>ESPliving>temp> voor temperatuur van de living op de gelijksvloers."<<endl;
      while (true) 
 	 {
 	    cin.getline(geefin,sizeof(geefin));
