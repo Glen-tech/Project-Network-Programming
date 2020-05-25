@@ -1,4 +1,4 @@
-Here is the final version of the project.
+<b>Here is the final version of the project.<b>
 
 client.cpp : Here the user can give commando's for filtering of sensor data of 2 diffrent sensors.
 
