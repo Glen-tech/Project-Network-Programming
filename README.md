@@ -1,5 +1,7 @@
 **Hardware control and measurement over the internet.**
 
+This branch is used for development of the code. The final version is merged into the master branch.
+
 The sockets of all the codes uses the TCP protocol , the cpp files uses the zeromq library.
 
 client.cpp : Here the user can give commando's for filtering the data of the ESP32. This data comes from 2 sensors.
