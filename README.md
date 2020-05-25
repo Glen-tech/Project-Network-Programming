@@ -1,7 +1,10 @@
-client.cpp : Via hier kan de gebruiker commando's geven voor de data te filteren van 3 verschillende sensoren
+**Hardware control and measurement over the internet.**
 
-reciever.cpp : De samengestelde bericht van de ESP32 wordt hier ontleed en gefilterd aan de hand van de commando wat het binnenkrijgt.
+The sockets of all the codes uses the TCP protocol , the cpp files uses the zeromq library.
 
-NetworkProgramming.ino : Hier zit de code in van de ESP32 voor 2 sensoren aan te sturen. 1 bericht wordt om de seconden verzonden met 
-de data van beide sensoren. Voor 3de sensor gebeurt via andere esp32. Deze code is in productie.
+client.cpp : Here the user can give commando's for filtering the data of the ESP32. This data comes from 2 sensors.
+
+reciever.cpp : The parshed message is here disected and vieuwed , this is independent of witch commado is used.
+
+NetworkProgramming.ino : Here in this file is the code of the ESP32. The message is send thanks to the TCP protocol.
 
