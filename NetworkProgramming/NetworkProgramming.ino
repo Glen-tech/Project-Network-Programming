@@ -1,4 +1,5 @@
-#include <ESP8266WiFi.h>
+//#include <ESP8266WiFi.h>
+#include "WiFi.h"
 #include <Wire.h>
 #include "Adafruit_MCP9808.h"
 #define LICHT A0//Grove - Light Sensor is connected to A0 of Arduino
