@@ -1,6 +1,6 @@
 **Hardware control and measurement over the internet.**
 
-This branch is used for development of the code. The final version is merged into the master branch.
+This branch is used for development of the code. The final version is merged into the master_Herex branch.
 
 The sockets of all the codes uses the TCP protocol , the cpp files uses the zeromq library.
 
